@@ -1,1 +1,1 @@
-# CS105-Computer-Graphic
+# CS105uit-Computer-Graphic
