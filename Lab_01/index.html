@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Vẽ Hình - Lab1 CS105.P22</title>
+    <link href="style/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="heading">
+            <h1>Lab1: Vẽ đường thẳng, hình tròn và hình elips </h1>
+            <h3>22520474 - Phạm Đức Huy Hoàng - CS105.P22</h3>
+        </div>
+
+        <div id="welcome-message" class="welcome-message">
+            <p>Chọn thuật toán để bắt đầu</p>
+        </div>
+
+        <div class="buttons">
+            <button onclick="loadAlgorithm('dda')">DDA</button>
+            <button onclick="loadAlgorithm('bresenham')">Bresenham</button>
+            <button onclick="loadAlgorithm('circle')">Hình tròn</button>
+            <button onclick="loadAlgorithm('ellipse')">Hình ellips</button>
+        </div>
+
+        <p id="esc-hint" class="hint" style="display:none;">Nhấn ESC để thoát</p>
+
+        <div class="main-container">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="buttons">
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+
+    <script src="src/scripts.js"></script>
+</body>
+</html>
