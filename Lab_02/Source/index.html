@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL UI Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="grid-container"></div>
+    <h2 style="text-align: center;">Bài Thực Hành 2</h2>
+    <canvas id="webglCanvas" width="900" height="600"></canvas>
+
+    <div id="uiContainer">
+        <div id="ui">
+            <h3>⚙️ Điều Khiển</h3>
+            <!-- <div id="coordinateDisplay">X: 0.00, Y: 0.00</div> -->
+            
+            <!-- Object selector -->
+            <div class="gman-widget-outer">
+                <label for="objectDropdown" class="gman-widget-label">Đối tượng đang chỉnh sửa:</label>
+                <select id="objectDropdown" class="gman-widget-select">
+                    <option value="triangle" selected >Tam giác</option>
+                    <option value="rectangle">Hình chữ nhật</option>
+                    <option value="letterH" >Chữ H</option>
+                </select>
+            </div>
+            
+            <!-- Visibility controls -->
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" id="triangleVisible" checked> Hiển thị tam giác
+                </label>
+                <label>
+                    <input type="checkbox" id="rectangleVisible" checked> Hiển thị hình chữ nhật
+                </label>
+                <label>
+                    <input type="checkbox" id="letterHVisible" checked> Hiển thị chữ H
+                </label>
+            </div>
+
+            <div class="gman-slider-outer">
+                <label for="scaleX" class="gman-slider-label">Tỉ lệ X:</label>
+                <input type="range" id="scaleX" min="0" max="2" step="0.01" value="1" class="gman-widget-slider">
+                <span id="scaleXValue">1</span>
+            </div>
+
+            <div class="gman-slider-outer">
+                <label for="scaleY" class="gman-slider-label">Tỉ lệ Y:</label>
+                <input type="range" id="scaleY" min="0" max="2" step="0.01" value="1" class="gman-widget-slider">
+                <span id="scaleYValue">1</span>
+            </div>
+            
+            <div class="gman-slider-outer">
+                <label for="translateX" class="gman-slider-label">Tịnh tiến X:</label>
+                <input type="range" id="translateX" min="-1" max="1" step="0.01" value="0" class="gman-widget-slider">
+                <span id="translateXValue">0</span>
+            </div>
+
+            <div class="gman-slider-outer">
+                <label for="translateY" class="gman-slider-label">Tịnh tiến Y:</label>
+                <input type="range" id="translateY" min="-1" max="1" step="0.01" value="0" class="gman-widget-slider">
+                <span id="translateYValue">0</span>
+            </div>
+
+            <div class="gman-slider-outer">
+                <label for="rotateSlider" class="gman-slider-label">Góc quay:</label>
+                <input type="range" id="rotateSlider" min="-360" max="360" step="1" value="0" class="gman-widget-slider">
+                <span id="rotateValue">0</span>
+            </div>
+            
+            
+            
+            <div class="gman-widget-outer">
+                <label for="colorDropdown" class="gman-widget-label">Màu sắc:</label>
+                <select id="colorDropdown" class="gman-widget-select">
+                    <option value="Đỏ">Đỏ</option>
+                    <option value="Cam">Cam</option>
+                    <option value="Vàng">Vàng</option>
+                    <option value="Lục">Lục</option>
+                    <option value="Lam">Lam</option>
+                    <option value="Chàm">Chàm</option>
+                    <option value="Tím">Tím</option>
+                </select>
+            </div>
+            <button id="toggleChaos" class="control-button">🎲 Bật chế độ ngẫu nhiên</button>
+            <button id="resetButton">Reset</button>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

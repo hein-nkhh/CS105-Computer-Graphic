@@ -1,0 +1,214 @@
+/* Nền tổng thể xanh dịu mắt */
+body {
+  background-color: #A0D8F1; /* Xanh nhạt */
+  font-family: 'Arial', sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  flex-direction: column;
+}
+
+/* Nền canvas xanh nhạt */
+canvas {
+  background-color: #D0F0FF; /* Xanh nhẹ hơn */
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid white;
+}
+
+/* UI Container với nền xanh đậm */
+#uiContainer {
+  position: fixed !important;
+  top: 10px !important;
+  right: 10px !important;
+  background: rgba(0, 102, 204, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  width: 250px;
+  z-index: 1000;
+}
+
+#coordinateDisplay {
+  display: none; /* Ẩn khi không hover */
+  color: #ffffff; /* Màu vàng sáng */
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Tạo hiệu ứng phát sáng nhẹ */
+  transition: opacity 0.3s ease-in-out;
+}
+
+.control-button {
+  margin: 10px;
+  padding: 8px 16px;
+  background: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.control-button:hover {
+  background: #45a049;
+}
+
+#resetButton {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  font: inherit;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  background: #3498db; /* Màu xanh dương */
+  border-radius: 5px;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#resetButton:hover {
+  background: #2980b9; /* Xanh đậm hơn khi hover */
+  transform: scale(1.05);
+}
+
+#resetButton:active {
+  background: #1c5a80; /* Xanh tối hơn khi nhấn */
+  transform: scale(0.95);
+}
+
+
+
+
+/* Grid styles */
+#grid-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
+  pointer-events: none;
+  z-index: 1;
+}
+/* @keyframes glow {
+  0% {
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.glow-effect {
+  animation: glow 0.6s linear;
+} */
+
+.grid-cell {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: auto;
+  transition: box-shadow 0.5s ease-out, transform 0.3s ease-out, background-color 0.5s ease-out;
+}
+
+
+
+/* Đảm bảo các phần tử khác nằm trên grid */
+canvas, #uiContainer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Tiêu đề */
+#ui h3 {
+  text-align: center;
+  margin: 0;
+  padding-bottom: 10px;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+/* Các điều khiển */
+.gman-slider-outer, .gman-checkbox-outer, .gman-widget-outer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 10px;
+  gap: 8px; /* Tạo khoảng cách đều */
+  width: 100%; /* Đảm bảo chúng chiếm toàn bộ không gian */
+  min-width: 200px;;
+}
+
+/* Nhãn */
+.gman-slider-label, .gman-widget-label, .gman-checkbox-label {
+  flex: 1; /* Giữ kích thước nhãn đồng đều */
+  font-size: 14px;
+  color: white;
+  min-width: 70px; /* Đảm bảo không bị nhỏ hơn */
+}
+
+/* Thanh trượt */
+.gman-widget-slider {
+  flex: 1; /* Giúp các thanh trượt bằng nhau */
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%; /* Chiếm toàn bộ không gian */
+  height: 6px;
+  background: #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.gman-widget-slider:hover {
+  background: #cce5ff;
+}
+
+/* Giá trị thanh trượt */
+#sizeValue, #translateXValue, #translateYValue, #rotateValue, #scaleXValue, #scaleYValue {
+  flex: 0.2;
+  text-align: center;
+  font-weight: bold;
+  color: #ffffff;
+  min-width: 40px; /* Giữ kích thước nhất quán */
+  display: inline-block;
+}
+
+/* Checkbox */
+.gman-widget-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #00ff00;
+  cursor: pointer;
+}
+
+/* Dropdown */
+.gman-widget-select {
+  padding: 5px;
+  border-radius: 4px;
+  border: none;
+  background: #005bbb;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.gman-widget-select:hover {
+  background: #004499;
+}
