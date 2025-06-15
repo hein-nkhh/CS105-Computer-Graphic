@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab03_CS105</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <h2>Vẽ Đường Cong</h2>
+    
+    <div class="tabs">
+        <div class="tab active" data-tab="polynomial">Đa Thức</div>
+        <div class="tab" data-tab="bezier">Bezier</div>
+        <div class="tab" data-tab="hermite">Hermite</div>
+        <div class="tab" data-tab="flower">Cánh Hoa</div> <!-- Tab Cánh Hoa -->
+    </div>
+    
+    <div id="polynomial-tab" class="tab-content active">
+        <div class="controls">
+            <label for="degree">Chọn bậc của hàm số (1-5):</label>
+            <input type="number" id="degree" value="5" min="1" max="5">
+            
+            <button onclick="drawGraph()">Vẽ Đường Cong</button>
+            <button onclick="resetGraph()">Reset</button>
+        </div>
+        
+        <div id="coefficients"></div>
+    </div>
+    
+    <div id="bezier-tab" class="tab-content">
+        <div class="controls">
+            <h3>Nhập các điểm điều khiển (x, y) cho đường cong Bezier</h3>
+            <button onclick="window.bezierFunctions.clearBezierPoints()">Xóa Tất Cả Điểm</button>
+        </div>
+        <div id="points-list"></div>
+    </div>
+
+    <div id="hermite-tab" class="tab-content">
+        <div class="controls">
+            <h3>Nhập các điểm và điều chỉnh vector pháp tuyến để vẽ đường cong Hermite</h3>
+            <button onclick="window.hermiteFunctions.clearHermitePoints()">Xóa Tất Cả Điểm</button>
+        </div>
+        <div id="hermite-points-list"></div>
+    </div>
+    
+    <div id="flower-tab" class="tab-content"> <!-- Tab Cánh Hoa -->
+        <div class="controls">
+            <button onclick="drawFlower()">Vẽ Cánh Hoa</button>
+            <button onclick="resetFlower()">Reset</button>
+        </div>
+    </div>
+
+    <canvas id="graphCanvas" width="800" height="400"></canvas>
+
+    <!-- Liên kết đến file JavaScript của các chức năng -->
+    <script src="js/script.js"></script>
+    <script src="js/beLzier.js"></script>
+    <script src="js/hermite.js"></script>
+    <script src="js/flower.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const canvas = document.getElementById('graphCanvas');
+
+            // Hàm để chuyển tab
+            function changeTab(tabName) {
+                // Ẩn tất cả tab content
+                tabContents.forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Đặt lại trạng thái active của các tab
+                tabs.forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Hiển thị tab được chọn
+                document.getElementById(tabName + '-tab').classList.add('active');
+                
+                // Đánh dấu tab được chọn là active
+                document.querySelector(`.tab[data-tab="${tabName}"]`).classList.add('active');
+                
+                // Khởi tạo nội dung cho tab đó
+                if (tabName === 'bezier') {
+                    window.bezierFunctions.initBezierMode();
+                    window.hermiteFunctions.exitHermiteMode();
+                } else if (tabName === 'hermite') {
+                    window.hermiteFunctions.initHermiteMode();
+                    window.bezierFunctions.exitBezierMode();
+                } else if (tabName === 'flower') {
+                    resetFlower();  // Reset canvas khi chọn tab Flower
+                    drawFlower();   // Vẽ cánh hoa khi vào tab Flower
+                    window.bezierFunctions.exitBezierMode();
+                    window.hermiteFunctions.exitHermiteMode();
+                } else {
+                    window.bezierFunctions.exitBezierMode();
+                    window.hermiteFunctions.exitHermiteMode();
+                    drawGraph(); // Sử dụng hàm từ script.js
+                }
+            }
+            
+            // Gán sự kiện cho các tab
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    changeTab(this.getAttribute('data-tab'));
+                });
+            });
+            
+            // Thêm sự kiện xử lý chuột cho canvas
+            canvas.addEventListener('click', function(event) {
+                window.bezierFunctions.handleBezierClick(event);
+                window.hermiteFunctions.handleHermiteClick(event);
+            });
+            
+            canvas.addEventListener('mousedown', function(event) {
+                window.bezierFunctions.handleBezierMouseDown(event);
+                window.hermiteFunctions.handleHermiteMouseDown(event);
+            });
+            
+            canvas.addEventListener('mousemove', function(event) {
+                window.bezierFunctions.handleBezierMouseMove(event);
+                window.hermiteFunctions.handleHermiteMouseMove(event);
+            });
+            
+            canvas.addEventListener('mouseup', function() {
+                window.bezierFunctions.handleBezierMouseUp();
+                window.hermiteFunctions.handleHermiteMouseUp();
+            });
+            
+            document.addEventListener('mouseup', function() {
+                window.bezierFunctions.handleBezierMouseUp();
+                window.hermiteFunctions.handleHermiteMouseUp();
+            });
+            
+            // Mặc định hiển thị tab đa thức khi tải trang
+            changeTab('polynomial');
+        });
+    </script>
+
+</body>
+</html>
